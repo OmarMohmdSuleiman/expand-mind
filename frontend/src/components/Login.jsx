@@ -1,4 +1,5 @@
 import React from "react";
+import SignUp from "./SignUp";
 
 function Login(){
 
@@ -25,7 +26,8 @@ function Login(){
             />
           </div>
           <button type="submit">Login</button>
-        </form></div>
+        </form>
+        <h4>No account ? <a href="#">SignUp</a></h4></div>
     )
 }
 
