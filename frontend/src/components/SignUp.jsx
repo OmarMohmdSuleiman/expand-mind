@@ -1,10 +1,22 @@
-import React from "react";
+import React,{useState} from "react";
+
 
 
 function SignUp(){
+
+  const [role,setRole]=useState("");
+
+  function handleChange(e){
+    setRole(e.target.value);
+  }
+  function handleSubmit(e){
+    e.preventDefault();
+    console.log(role);
+
+  }
     return(
         <div><h2>Sign Up</h2>
-        <form>
+        <form onSubmit={handleSubmit}> 
         <div>
             <label htmlFor="userName">Name</label>
             <input
@@ -36,6 +48,8 @@ function SignUp(){
           <label htmlFor="role">Role</label>
           <select
             id="role"
+            value={role}
+            onChange={handleChange}
             required
           >
             <option value="">Select Role</option>
