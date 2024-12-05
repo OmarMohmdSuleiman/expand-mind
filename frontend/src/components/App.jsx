@@ -6,7 +6,12 @@ import SignUp from './SignUp';
 function App() {
   return (
     <div>
-      <Login />
+      <Router>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/signup' element={<SignUp />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
