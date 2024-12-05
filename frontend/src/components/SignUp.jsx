@@ -1,10 +1,12 @@
 import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
 function SignUp(){
 
   const [role,setRole]=useState("");
+  const navi=useNavigate();
 
   function handleChange(e){
     setRole(e.target.value);
