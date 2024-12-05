@@ -27,7 +27,7 @@ function Login(){
           </div>
           <button type="submit">Login</button>
         </form>
-        <h4>No account ? <a href="#">SignUp</a></h4></div>
+        <h4>No account ? <button>SignUp</button></h4></div>
     )
 }
 
