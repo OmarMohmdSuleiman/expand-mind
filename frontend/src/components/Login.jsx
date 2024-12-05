@@ -1,7 +1,13 @@
 import React from "react";
 import SignUp from "./SignUp";
+import {useNavigate} from "react-router-dom";
 
 function Login(){
+  const navi=useNavigate();
+
+  function SignUpRoute(){
+    navi('/signup');
+  }
 
 
     return(
@@ -27,7 +33,7 @@ function Login(){
           </div>
           <button type="submit">Login</button>
         </form>
-        <h4>No account ? <button>SignUp</button></h4></div>
+        <h4>No account ? <button onClick={SignUpRoute}>SignUp</button></h4></div>
     )
 }
 
