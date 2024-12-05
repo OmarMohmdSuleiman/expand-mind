@@ -13,7 +13,11 @@ function SignUp(){
   }
   function handleSubmit(e){
     e.preventDefault();
-    console.log(role);
+    if(role){
+      navi(`/${role}-dashboard`);
+    }else{
+      alert("choose a role");
+    }
 
   }
     return(
