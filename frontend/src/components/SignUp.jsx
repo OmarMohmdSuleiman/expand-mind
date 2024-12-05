@@ -32,6 +32,18 @@ function SignUp(){
               required
             />
           </div>
+          <div>
+          <label htmlFor="role">Role</label>
+          <select
+            id="role"
+            required
+          >
+            <option value="">Select Role</option>
+            <option value="student">Student</option>
+            <option value="instructor">Instructor</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
           <button type="submit">SignUp</button>
         </form></div>
     )
