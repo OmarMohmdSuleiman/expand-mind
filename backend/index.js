@@ -1,9 +1,17 @@
 import express from "express";
 import pg from "pg";
+import env from "dotenv";
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+env.config({ path: resolve(__dirname, '../.env') });
 
 
 const app = express();
-const port = 4000;
+const port = 4000; 
 
 const db = new pg.Client({
     user: process.env.PG_USER,
