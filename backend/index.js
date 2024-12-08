@@ -26,6 +26,27 @@ app.get('/', (req, res) => {
     res.status(200).send("Ready");
 });
 
+app.post("/signup", async (req, res) => {
+    const { name, email, password, role } = req.body;
+  
+    if (!name || !email || !password || !role) {
+      return res.status(400).send("All fields are required");
+    }
+  
+    try {
+      
+      const result = await db.query(
+        "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
+        [name, email, password, role]
+      );
+      const newUser = result.rows[0];
+      res.status(201).json(newUser);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error registering user");
+    }
+  }); 
+
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
