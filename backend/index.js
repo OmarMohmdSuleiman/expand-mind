@@ -1,6 +1,7 @@
 import express from "express";
 import pg from "pg";
 import env from "dotenv";
+import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
@@ -12,6 +13,8 @@ env.config({ path: resolve(__dirname, '../.env') });
 
 const app = express();
 const port = 4000; 
+app.use(cors());
+app.use(express.json());
 
 const db = new pg.Client({
     user: process.env.PG_USER,
@@ -32,7 +35,7 @@ app.post("/signup", async (req, res) => {
     if (!name || !email || !password || !role) {
       return res.status(400).send("All fields are required");
     }
-  
+
     try {
       
       const result = await db.query(
