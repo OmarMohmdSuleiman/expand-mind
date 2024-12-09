@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
     res.status(200).send("Ready");
 });
 
-app.post('/',async (req,res)=>{
+app.post('/login',async (req,res)=>{
   const {email, password} = req.body;
 
   try{
