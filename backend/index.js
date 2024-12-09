@@ -30,7 +30,29 @@ app.get('/', (req, res) => {
     res.status(200).send("Ready");
 });
 
-app.post("/signup", async (req, res) => {
+app.post('/',async (req,res)=>{
+  const {email, password} = req.body;
+
+  try{
+    const checkUser=await db.query("SELECT * from users WHERE email=$1" , [email]);
+    if(checkUser.rows.length===0){
+      return res.redirect("/login?message=User%20does%20not%20exist");
+    }
+    const user=checkUser.rows[0];
+    const passValid=await bcrypt.compare(password,user.password)
+    if(!passValid){
+      return res.redirect("/login?message=Incorrect%20password");
+    }
+    
+    res.status(201).json(user);
+  }catch (error) {
+    console.error(error);
+    res.status(500).send("Error logging in");
+  }
+  
+});
+
+app.post('/signup', async (req, res) => {
     const { name, email, password, role } = req.body;
   
     if (!name || !email || !password || !role) {
