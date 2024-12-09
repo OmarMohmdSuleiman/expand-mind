@@ -36,15 +36,16 @@ app.post('/login',async (req,res)=>{
   try{
     const checkUser=await db.query("SELECT * from users WHERE email=$1" , [email]);
     if(checkUser.rows.length===0){
-      return res.redirect("/login?message=User%20does%20not%20exist");
+      return res.status(404).json({ message: "User does not exist" });
     }
+
     const user=checkUser.rows[0];
     const passValid=await bcrypt.compare(password,user.password)
     if(!passValid){
-      return res.redirect("/login?message=Incorrect%20password");
+       return res.status(401).json({ message: "Incorrect password" });
     }
     
-    res.status(201).json(user);
+    res.status(200).json(user);
   }catch (error) {
     console.error(error);
     res.status(500).send("Error logging in");
