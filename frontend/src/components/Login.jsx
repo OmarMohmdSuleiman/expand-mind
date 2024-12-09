@@ -19,36 +19,42 @@ function Login(){
   }
   async function handleLogin(e) {
     e.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:4000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        // Assuming the response includes user data
-        console.log("Login successful", data.user);
-        // Redirect based on the user's role
-        if (data.user.role === "student") {
-          navi("/student-dashboard");
-        } else if (data.user.role === "instructor") {
-          navi("/instructor-dashboard");
-        } else if (data.user.role === "admin") {
-          navi("/admin-dashboard");
+        if (data && data.role) {
+          // Assuming the response includes user data
+          console.log("Login successful", data.name);
+          
+          // Redirect based on the user's role
+          if (data.role === "student") {
+            navi("/student-dashboard");
+          } else if (data.role === "instructor") {
+            navi("/instructor-dashboard");
+          } else if (data.role === "admin") {
+            navi("/admin-dashboard");
+          } else {
+            console.log("No role found in user data");
+          }
+        } else {
+          console.log("Role not found in the user data");
         }
       } else {
-        setErrorMessage(data.message);
+        setErrorMessage(data.message || "Login failed");
       }
     } catch (error) {
       console.error(error);
       setErrorMessage("An error occurred. Please try again.");
     }
   }
-
     return(
         <div> <h2>Login</h2>
         <form onSubmit={handleLogin}>
