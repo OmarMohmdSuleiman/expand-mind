@@ -51,7 +51,7 @@ function SignUp(){
           console.error("Error:", error);
         });
     } else {
-      alert("Please choose a role");
+      alert("Please choose a role before signup");
     }
   }
     return(

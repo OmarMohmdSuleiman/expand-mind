@@ -4,10 +4,11 @@ import env from "dotenv";
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
+import bcrypt from "bcrypt";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
+const saltRounds = 10;
 env.config({ path: resolve(__dirname, '../.env') });
 
 
@@ -37,13 +38,21 @@ app.post("/signup", async (req, res) => {
     }
 
     try {
-      
-      const result = await db.query(
-        "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
-        [name, email, password, role]
-      );
-      const newUser = result.rows[0];
+      const checkResult=await db.query("SELECT from users WHERE email = $1" ,[email]);
+      if (checkResult.rows.length > 0) {
+        return res.redirect("/login?message=User%20already%20exists");
+        
+      }else{
+        const hash=await bcrypt.hash(password,saltRounds);
+        const result = await db.query(
+          "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
+          [name, email, hash, role]
+        );
+        const newUser = result.rows[0];
       res.status(201).json(newUser);
+      }
+      
+      
     } catch (error) {
       console.error(error);
       res.status(500).send("Error registering user");
