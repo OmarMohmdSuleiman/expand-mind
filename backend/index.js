@@ -118,6 +118,16 @@ app.post('/signup', async (req, res) => {
     }
   });
 
+  app.get('/courses', async (req, res) => {
+    try {
+      const result = await db.query('SELECT * FROM courses');
+      res.status(200).json(result.rows);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+      res.status(500).send('Error fetching courses');
+    }
+  });
+
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
