@@ -8,21 +8,35 @@ function Admin(){
   const [selectedInstructor, setSelectedInstructor] = useState('');
   const [message, setMessage] = useState('');
 
+
+  useEffect(() => {
+    // Fetch all instructors
+    fetch('http://localhost:4000/instructors')
+      .then((response) => response.json())
+      .then((data) => setInstructors(data))
+      .catch((error) => console.error('Error fetching instructors:', error));
+  }, []);
+
   const handleAddCourse = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await fetch('http://localhost:4000/admin/add-course', {
+      const response = await fetch('http://localhost:4000/admin-dashboard/add-course', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, description, instructorId: selectedInstructor }),
       });
-
-      const data = await response.json();
+  
+      // Handle response and check for headers safely
       if (response.ok) {
+        const data = await response.json();
         setMessage('Course added successfully');
       } else {
-        setMessage(data.message || 'Failed to add course');
+        const contentType = response.headers ? response.headers.get('Content-Type') : '';
+        const errorMessage = contentType && contentType.includes('application/json')
+          ? (await response.json()).message
+          : await response.text(); // Fallback for non-JSON response
+        setMessage(errorMessage || 'Failed to add course');
       }
     } catch (error) {
       console.error('Error adding course:', error);
@@ -30,17 +44,18 @@ function Admin(){
     }
   };
 
-
     return(
         <div>
       <h1>Admin Dashboard</h1>
       
-      <form >
+      <form onSubmit={handleAddCourse}>
         <div>
           <label htmlFor="name">Course Name</label>
           <input
             type="text"
             id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
@@ -48,6 +63,8 @@ function Admin(){
           <label htmlFor="description">Description</label>
           <textarea
             id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
@@ -55,9 +72,16 @@ function Admin(){
           <label htmlFor="instructor">Assign Instructor</label>
           <select
             id="instructor"
+            value={selectedInstructor}
+            onChange={(e) => setSelectedInstructor(e.target.value)}
             required
           >
             <option value="">Select an Instructor</option>
+            {instructors.map((instructor) => (
+              <option key={instructor.user_id} value={instructor.user_id}>
+                {instructor.name}
+              </option>
+            ))}
           </select>
         </div>
         <button type="submit">Add Course</button>
