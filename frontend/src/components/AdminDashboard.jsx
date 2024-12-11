@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Admin(){
 
@@ -7,6 +8,11 @@ function Admin(){
   const [description, setDescription] = useState('');
   const [selectedInstructor, setSelectedInstructor] = useState('');
   const [message, setMessage] = useState('');
+  const navi = useNavigate(); 
+
+  function handleViewCourses(){
+    navi('/admin-dashboard/view-courses')
+  }
 
 
   useEffect(() => {
@@ -86,6 +92,8 @@ function Admin(){
         </div>
         <button type="submit">Add Course</button>
       </form>
+
+      <button onClick={handleViewCourses}>View Courses</button>
     </div>
     )
 }
