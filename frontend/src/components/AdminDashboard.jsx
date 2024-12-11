@@ -1,6 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 
 function Admin(){
+
+  const [instructors, setInstructors] = useState([]);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [selectedInstructor, setSelectedInstructor] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleAddCourse = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:4000/admin/add-course', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description, instructorId: selectedInstructor }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setMessage('Course added successfully');
+      } else {
+        setMessage(data.message || 'Failed to add course');
+      }
+    } catch (error) {
+      console.error('Error adding course:', error);
+      setMessage('Error adding course');
+    }
+  };
+
+
     return(
         <div>
       <h1>Admin Dashboard</h1>
