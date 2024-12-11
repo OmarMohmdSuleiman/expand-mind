@@ -36,12 +36,14 @@ app.post('/login',async (req,res)=>{
   try{
     const checkUser=await db.query("SELECT * from users WHERE email=$1" , [email]);
     if(checkUser.rows.length===0){
+      
       return res.status(404).json({ message: "User does not exist" });
     }
 
     const user=checkUser.rows[0];
     const passValid=await bcrypt.compare(password,user.password)
     if(!passValid){
+      
        return res.status(401).json({ message: "Incorrect password" });
     }
     
