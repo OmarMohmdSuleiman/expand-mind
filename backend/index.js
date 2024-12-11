@@ -84,7 +84,7 @@ app.post('/signup', async (req, res) => {
     }
   }); 
 
-  app.post('/admin/add-course', async (req, res) => {
+  app.post('/admin-dashboard/add-course', async (req, res) => {
     const { name, description, instructorId } = req.body;
   
     if (!name || !instructorId) {
@@ -92,13 +92,11 @@ app.post('/signup', async (req, res) => {
     }
   
     try {
-      
-      const checkInstructor = await db.query("SELECT * FROM users WHERE id = $1 AND role = 'instructor'", [instructorId]);
+      const checkInstructor = await db.query("SELECT * FROM users WHERE user_id = $1 AND role = 'instructor'", [instructorId]);
       if (checkInstructor.rows.length === 0) {
         return res.status(404).json({ message: 'Instructor not found or invalid role' });
       }
   
-      
       const result = await db.query(
         "INSERT INTO courses (title, description, instructor_id) VALUES ($1, $2, $3) RETURNING *",
         [name, description, instructorId]
@@ -106,8 +104,17 @@ app.post('/signup', async (req, res) => {
   
       res.status(201).json({ message: 'Course added successfully', course: result.rows[0] });
     } catch (error) {
-      console.error('Error adding course:', error);
-      res.status(500).send('Error adding course');
+      console.error('Error adding course:', error);  
+      res.status(500).json({ message: 'Error adding course', error: error.message });
+    }
+  });
+  app.get('/instructors', async (req, res) => { 
+    try {
+      const result = await db.query("SELECT user_id, name FROM users WHERE role = 'instructor'");
+      res.status(200).json(result.rows);
+    } catch (error) {
+      console.error('Error fetching instructors:', error);
+      res.status(500).send('Error fetching instructors');
     }
   });
 
