@@ -11,7 +11,10 @@ function Admin(){
   const navi = useNavigate(); 
 
   function handleViewCourses(){
-    navi('/admin-dashboard/view-courses')
+    navi('/admin-dashboard/view-courses');
+  }
+  function handleViewStudents(){
+    navi('/admin-dashboard/view-students');
   }
 
 
@@ -94,6 +97,7 @@ function Admin(){
       </form>
 
       <button onClick={handleViewCourses}>View Courses</button>
+      <button onClick={handleViewStudents}>View Students</button>
     </div>
     )
 }
