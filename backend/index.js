@@ -120,7 +120,9 @@ app.post('/signup', async (req, res) => {
 
   app.get('/courses', async (req, res) => {
     try {
-      const result = await db.query('SELECT * FROM courses');
+      const result = await db.query(`SELECT courses.course_id, courses.title, courses.description, users.name AS instructor_name
+       FROM courses
+       JOIN users ON courses.instructor_id = users.user_id`);
       res.status(200).json(result.rows);
     } catch (error) {
       console.error('Error fetching courses:', error);

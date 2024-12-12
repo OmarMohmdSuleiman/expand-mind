@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useState} from "react";
+import { useEffect } from "react";
 
 function ViewCourses(){
     const [courses, setCourses] = useState([]);
@@ -15,12 +16,12 @@ function ViewCourses(){
       <div>
         <h1>All Courses</h1>
         <ul>
-          {courses.map((course) => (
-            <li key={course.course_id}>
-              <h2>{course.title}</h2>
-              <p>{course.description}</p>
-              <p>Instructor ID: {course.instructor_id}</p>
-            </li>
+        {courses.map((course) => (
+  <li key={course.course_id}>
+    <h2>{course.title}</h2>
+    <p>{course.description}</p>
+    <p>Instructor name: {course.instructor_name}</p>
+  </li>
           ))}
         </ul>
       </div>
