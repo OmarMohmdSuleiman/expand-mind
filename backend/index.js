@@ -130,6 +130,18 @@ app.post('/signup', async (req, res) => {
     }
   });
 
+  app.get('/students', async (req, res) => {
+    try {
+      const result = await db.query(
+        `SELECT users.user_id, users.name, users.email FROM users WHERE users.role = 'student'`
+      );
+      res.status(200).json(result.rows);
+    } catch (error) {
+      console.error('Error fetching students:', error);
+      res.status(500).send('Error fetching students');
+    }
+  });
+
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
