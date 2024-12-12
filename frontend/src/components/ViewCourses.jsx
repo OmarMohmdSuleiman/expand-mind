@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import { useEffect } from "react";
+import Courses from "./Courses";
 
 function ViewCourses(){
     const [courses, setCourses] = useState([]);
@@ -16,13 +17,7 @@ function ViewCourses(){
       <div>
         <h1>All Courses</h1>
         <ul>
-        {courses.map((course) => (
-  <li key={course.course_id}>
-    <h2>{course.title}</h2>
-    <p>{course.description}</p>
-    <p>Instructor name: {course.instructor_name}</p>
-  </li>
-          ))}
+          <Courses courses={courses} />
         </ul>
       </div>
     );
