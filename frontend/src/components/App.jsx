@@ -6,6 +6,7 @@ import Students from './StudentDashboard';
 import Instructor from './InstructorDashboard';
 import Admin from './AdminDashboard';
 import ViewCourses from './ViewCourses';
+import ShowStudents from './ShowStudents';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/instructor-dashboard" element={<Instructor />} />
           <Route path="/admin-dashboard" element={<Admin />} />
           <Route path="/admin-dashboard/view-courses" element={<ViewCourses />} />
+          <Route path="/admin-dashboard/view-students" element={<ShowStudents />} />
         </Routes>
       </Router>
     </div>
