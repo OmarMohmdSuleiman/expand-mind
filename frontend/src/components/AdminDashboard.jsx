@@ -98,6 +98,7 @@ function Admin(){
 
       <button onClick={handleViewCourses}>View Courses</button>
       <button onClick={handleViewStudents}>View Students</button>
+      <button >View Enrollments</button>
     </div>
     )
 }
