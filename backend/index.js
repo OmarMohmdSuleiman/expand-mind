@@ -190,23 +190,33 @@ app.post('/signup', async (req, res) => {
       // Fetch all enrollments with course and student details
       const result = await db.query(`
         SELECT 
-          enrolments.enrolment_id,
-          enrolments.user_id,
           users.name AS student_name,
-          enrolments.course_id,
           courses.title AS course_name
         FROM enrolments
         JOIN users ON enrolments.user_id = users.user_id
         JOIN courses ON enrolments.course_id = courses.course_id
       `);
   
-      res.status(200).json(result.rows);
+      // Grouping enrollments by student name
+      const groupedEnrollments = result.rows.reduce((acc, curr) => {
+        const { student_name, course_name } = curr;
+        const existingStudent = acc.find(item => item.name === student_name);
+  
+        if (existingStudent) {
+          existingStudent.courses.push(course_name);
+        } else {
+          acc.push({ name: student_name, courses: [course_name] });
+        }
+  
+        return acc;
+      }, []);
+  
+      res.status(200).json(groupedEnrollments);
     } catch (error) {
       console.error('Error fetching enrollments:', error);
       res.status(500).json({ message: 'Error fetching enrollments', error: error.message });
     }
   });
-
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
