@@ -142,6 +142,71 @@ app.post('/signup', async (req, res) => {
     }
   });
 
+  app.post('/enrollments', async (req, res) => {
+    const { user_id, course_id } = req.body;
+    console.log("Received data:", req.body);
+  
+    if (!user_id || !course_id) {
+      return res.status(400).json({ message: 'Student ID and Course ID are required' });
+    }
+  
+    try {
+      // Check if student exists
+      const checkStudent = await db.query("SELECT * FROM users WHERE user_id = $1 AND role = 'student'", [user_id]);
+      if (checkStudent.rows.length === 0) {
+        return res.status(404).json({ message: 'Student not found or invalid role' });
+      }
+  
+      // Check if course exists
+      const checkCourse = await db.query("SELECT * FROM courses WHERE course_id = $1", [parseInt(course_id, 10)]);
+      if (checkCourse.rows.length === 0) {
+        return res.status(404).json({ message: 'Course not found' });
+      }
+  
+      // Check if enrollment already exists
+      const checkEnrollment = await db.query(
+        "SELECT * FROM enrolments WHERE user_id = $1 AND course_id = $2",
+        [user_id, course_id]
+      );
+      if (checkEnrollment.rows.length > 0) {
+        return res.status(400).json({ message: 'Student is already enrolled in this course' });
+      }
+  
+      // Add enrollment
+      const result = await db.query(
+        "INSERT INTO enrolments (user_id, course_id) VALUES ($1, $2) RETURNING *",
+        [user_id, course_id]
+      );
+  
+      res.status(201).json({ message: 'Enrollment successful', enrollment: result.rows[0] });
+    } catch (error) {
+      console.error('Error enrolling student:', error);
+      res.status(500).json({ message: 'Error enrolling student', error: error.message });
+    }
+  });
+  
+  app.get('/enrollments', async (req, res) => {
+    try {
+      // Fetch all enrollments with course and student details
+      const result = await db.query(`
+        SELECT 
+          enrolments.enrolment_id,
+          enrolments.user_id,
+          users.name AS student_name,
+          enrolments.course_id,
+          courses.title AS course_name
+        FROM enrolments
+        JOIN users ON enrolments.user_id = users.user_id
+        JOIN courses ON enrolments.course_id = courses.course_id
+      `);
+  
+      res.status(200).json(result.rows);
+    } catch (error) {
+      console.error('Error fetching enrollments:', error);
+      res.status(500).json({ message: 'Error fetching enrollments', error: error.message });
+    }
+  });
+
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
