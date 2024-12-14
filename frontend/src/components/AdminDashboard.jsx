@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 function Admin(){
 
   const [instructors, setInstructors] = useState([]);
@@ -15,6 +16,9 @@ function Admin(){
   }
   function handleViewStudents(){
     navi('/admin-dashboard/view-students');
+  }
+  function handleViewEnrollments(){
+    navi('/admin-dashboard/view-enrollments');
   }
 
 
@@ -98,7 +102,7 @@ function Admin(){
 
       <button onClick={handleViewCourses}>View Courses</button>
       <button onClick={handleViewStudents}>View Students</button>
-      <button >View Enrollments</button>
+      <button onClick={handleViewEnrollments}>View Enrollments</button>
     </div>
     )
 }
