@@ -217,6 +217,19 @@ app.post('/signup', async (req, res) => {
       res.status(500).json({ message: 'Error fetching enrollments', error: error.message });
     }
   });
+
+  app.get('/instructor' ,async(req,res)=>{
+    try{
+      const result=await db.query(`SELECT courses.title, users.name AS instructor_name
+      FROM courses
+      JOIN users ON courses.instructor_id = users.user_id `);
+      res.status(200).json(result.rows);
+    }catch(error) {
+      console.error('Error enrolling instructors:', error);
+      res.status(500).json({ message: 'Error enrolling instructors', error: error.message });
+    }
+  });
+
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
