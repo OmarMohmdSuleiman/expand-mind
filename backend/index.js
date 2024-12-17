@@ -218,15 +218,39 @@ app.post('/signup', async (req, res) => {
     }
   });
 
-  app.get('/instructor' ,async(req,res)=>{
-    try{
-      const result=await db.query(`SELECT courses.title, users.name AS instructor_name
-      FROM courses
-      JOIN users ON courses.instructor_id = users.user_id `);
+  app.get('/instructor', async (req, res) => {
+    try {
+      const result = await db.query(
+        `SELECT courses.title, users.name AS instructor_name, users.user_id
+        FROM courses
+        JOIN users ON courses.instructor_id = users.user_id`
+      );
       res.status(200).json(result.rows);
-    }catch(error) {
-      console.error('Error enrolling instructors:', error);
-      res.status(500).json({ message: 'Error enrolling instructors', error: error.message });
+    } catch (error) {
+      console.error('Error fetching instructors:', error);
+      res.status(500).json({ message: 'Error fetching instructors', error: error.message });
+    }
+  });
+
+  app.delete('/instructor/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    if (!id) {
+      return res.status(400).json({ message: 'Instructor ID is required' });
+    }
+  
+    try {
+      
+      const result = await db.query('DELETE FROM users WHERE user_id = $1 RETURNING *', [id]);
+  
+      if (result.rowCount > 0) {
+        res.status(200).json({ message: 'Instructor deleted successfully' });
+      } else {
+        res.status(404).json({ message: 'Instructor not found' });
+      }
+    } catch (error) {
+      console.error('Error deleting instructor:', error);
+      res.status(500).json({ message: 'Error deleting instructor', error: error.message });
     }
   });
 
