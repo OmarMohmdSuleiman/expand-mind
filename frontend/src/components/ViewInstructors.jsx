@@ -7,10 +7,36 @@ function ViewInstructors(){
     useEffect(()=>{
         fetch("http://localhost:4000/instructor")
         .then((response) => response.json())
-    .then((data) => setInstructor(data))
+        .then((data) => {
+            console.log('Fetched instructors:', data);  // Log the data to inspect its structure
+            setInstructor(data);
+          })
     .catch((error) => console.error('Error fetching instructors:', error));
 }, []);
-   
+
+function handleDelete(id){
+    console.log('Instructor ID to delete:', id); // Log the ID to verify it's being passed
+    if (!id) {
+      console.error('Invalid instructor ID:', id);
+      return; // Prevent deletion if ID is invalid
+    }
+
+    fetch(`http://localhost:4000/instructor/${id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (response.ok) {
+          setInstructor((prevInstructors) =>
+            prevInstructors.filter((instructor) => instructor.user_id !== id)
+          );
+        } else {
+          console.error('Failed to delete instructor');
+          response.json().then((data) => console.error(data.message)); // Log the error message from the server
+        }
+      })
+      .catch((error) => console.error('Error deleting instructor:', error));
+  };
+
     return(
         <div>The instructors are :
             <ul>
@@ -19,6 +45,7 @@ function ViewInstructors(){
             key={index}
             name={instructor.instructor_name} // Instructor's name
             course={instructor.title} // Course title
+            onDelete={() => handleDelete(instructor.user_id)}
           />
         ))}
             </ul>
