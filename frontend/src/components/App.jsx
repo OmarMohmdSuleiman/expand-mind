@@ -8,6 +8,7 @@ import Admin from './AdminDashboard';
 import ViewCourses from './ViewCourses';
 import ShowStudents from './ShowStudents';
 import ViewEnrollments from './ViewEnrollments';
+import ViewInstructors from './ViewInstructors';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/admin-dashboard/view-courses" element={<ViewCourses />} />
           <Route path="/admin-dashboard/view-students" element={<ShowStudents />} />
           <Route path="/admin-dashboard/view-enrollments" element={<ViewEnrollments />} />
+          <Route path="/admin-dashboard/view-instructors" element={<ViewInstructors />} />
         </Routes>
       </Router>
     </div>
