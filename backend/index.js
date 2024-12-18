@@ -30,29 +30,38 @@ app.get('/', (req, res) => {
     res.status(200).send("Ready");
 });
 
-app.post('/login',async (req,res)=>{
-  const {email, password} = req.body;
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
 
-  try{
-    const checkUser=await db.query("SELECT * from users WHERE email=$1" , [email]);
-    if(checkUser.rows.length===0){
-      
+  try {
+    // Check if the user exists
+    const checkUser = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+    if (checkUser.rows.length === 0) {
       return res.status(404).json({ message: "User does not exist" });
     }
 
-    const user=checkUser.rows[0];
-    const passValid=await bcrypt.compare(password,user.password)
-    if(!passValid){
-      
-       return res.status(401).json({ message: "Incorrect password" });
+    const user = checkUser.rows[0];
+
+    // Validate password
+    const passValid = await bcrypt.compare(password, user.password);
+    if (!passValid) {
+      return res.status(401).json({ message: "Incorrect password" });
     }
-    
-    res.status(200).json(user);
-  }catch (error) {
-    console.error(error);
-    res.status(500).send("Error logging in");
+
+    // Prepare the response with only required fields
+    const response = {
+      id: user.user_id,
+      name: user.name,
+      email: user.email,
+      role: user.role, 
+    };
+    console.log(response);
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Error logging in" });
   }
-  
 });
 
 app.post('/signup', async (req, res) => {
@@ -251,6 +260,34 @@ app.post('/signup', async (req, res) => {
     } catch (error) {
       console.error('Error deleting instructor:', error);
       res.status(500).json({ message: 'Error deleting instructor', error: error.message });
+    }
+  });
+
+  app.get('/instructor/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const result = await db.query(
+        `SELECT users.name AS instructor_name, courses.title AS course_title
+         FROM users
+         LEFT JOIN courses ON users.user_id = courses.instructor_id
+         WHERE users.user_id = $1`,
+        [id]
+      );
+  
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'Instructor not found' });
+      }
+  
+      const instructorData = {
+        instructor_name: result.rows[0].instructor_name,
+        courses: result.rows.map((row) => row.course_title).filter(Boolean),
+      };
+  
+      res.status(200).json(instructorData);
+    } catch (error) {
+      console.error('Error fetching instructor details:', error);
+      res.status(500).json({ message: 'Error fetching instructor details' });
     }
   });
 
