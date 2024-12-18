@@ -124,7 +124,7 @@ function EachStudent({ students }) {
                 <h4>Enrolled Courses:</h4>
                 <ul>
                   {enrolledCourses[student.user_id].map((course) => (
-                    <li key={course.course_id}>{course.course_name}</li>
+                    <li key={course.course_id}>{course.title}</li>
                   ))}
                 </ul>
               </div>
