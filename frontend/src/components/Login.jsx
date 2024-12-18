@@ -28,6 +28,7 @@ function Login(){
       });
   
       const data = await response.json();
+      console.log("Backend Response:", data);
   
       if (response.ok) {
         if (data && data.role) {
@@ -38,7 +39,8 @@ function Login(){
           if (data.role === "student") {
             navi("/student-dashboard");
           } else if (data.role === "instructor") {
-            navi("/instructor-dashboard");
+            console.log("Navigating to Instructor Dashboard");
+            navi(`/instructor-dashboard/${data.id}`);
           } else if (data.role === "admin") {
             navi("/admin-dashboard");
           } else {
