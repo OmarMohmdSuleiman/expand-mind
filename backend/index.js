@@ -291,6 +291,47 @@ app.post('/signup', async (req, res) => {
     }
   });
 
+  app.get('/student/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      // Query to fetch student details and their enrolled courses
+      const result = await db.query(
+        `
+        SELECT 
+          users.user_id, 
+          users.name AS student_name, 
+          users.email, 
+          courses.title AS course_title
+        FROM users
+        LEFT JOIN enrolments ON users.user_id = enrolments.user_id
+        LEFT JOIN courses ON enrolments.course_id = courses.course_id
+        WHERE users.user_id = $1 AND users.role = 'student'
+        `,
+        [id]
+      );
+  
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'Student not found or not logged in' });
+      }
+  
+      
+      const student = {
+        id: result.rows[0].user_id,
+        name: result.rows[0].student_name,
+        email: result.rows[0].email,
+        enrolled_courses: result.rows
+          .map((row) => row.course_title)
+          .filter(Boolean), 
+      };
+  
+      res.status(200).json(student);
+    } catch (error) {
+      console.error('Error fetching student details:', error);
+      res.status(500).json({ message: 'Error fetching student details' });
+    }
+  });
+
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
