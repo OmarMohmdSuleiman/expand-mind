@@ -37,7 +37,7 @@ function Login(){
           
           // Redirect based on the user's role
           if (data.role === "student") {
-            navi("/student-dashboard");
+            navi(`/student-dashboard/${data.id}`);
           } else if (data.role === "instructor") {
             console.log("Navigating to Instructor Dashboard");
             navi(`/instructor-dashboard/${data.id}`);
