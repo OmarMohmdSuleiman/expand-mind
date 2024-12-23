@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from "react";
 import { useParams } from "react-router-dom";
+import StudentCourses from "./StudentCourses";
 
 function Students(){
     const {id}=useParams();
     const[student,setStudent]=useState(null);
-    const [error, setError] = useState(null);
+   const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchStudentDetails = async () => {
@@ -41,6 +42,9 @@ function Students(){
         <div>
         <h2>{student.name}</h2>
         <h3>Email: {student.email}</h3>
+        
+            <StudentCourses courses={student.enrolled_courses} />
+        
         </div>
     )
 }
