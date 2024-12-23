@@ -17,13 +17,14 @@ function App() {
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path="/student-dashboard" element={<Students />} />
+          <Route path="/student-dashboard/:id" element={<Students />} />
           <Route path="/instructor-dashboard/:id" element={<Instructor />} />
           <Route path="/admin-dashboard" element={<Admin />} />
           <Route path="/admin-dashboard/view-courses" element={<ViewCourses />} />
           <Route path="/admin-dashboard/view-students" element={<ShowStudents />} />
           <Route path="/admin-dashboard/view-enrollments" element={<ViewEnrollments />} />
           <Route path="/admin-dashboard/view-instructors" element={<ViewInstructors />} />
+          <Route path="/student-dashboard" element={<div>No student selected</div>} />
         </Routes>
       </Router>
     </div>
