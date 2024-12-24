@@ -49,12 +49,20 @@ app.post('/login', async (req, res) => {
       return res.status(401).json({ message: "Incorrect password" });
     }
 
+    const payload = {
+      id: user.user_id,
+      role: user.role,
+    };
+
+    const token= jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRATION});
+
     // Prepare the response with only required fields
     const response = {
       id: user.user_id,
       name: user.name,
       email: user.email,
       role: user.role, 
+      token,
     };
     console.log(response);
 
