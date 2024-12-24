@@ -9,23 +9,45 @@ import ViewCourses from './ViewCourses';
 import ShowStudents from './ShowStudents';
 import ViewEnrollments from './ViewEnrollments';
 import ViewInstructors from './ViewInstructors';
+import PrivateRoute from './PrivateRoute';
 
 function App() {
   return (
     <div>
       <Router>
         <Routes>
-          <Route path='/' element={<Login />} />
+        <Route path="/" element={<Login />} />
+
           <Route path='/signup' element={<SignUp />} />
-          <Route path="/student-dashboard/:id" element={<Students />} />
-          <Route path="/instructor-dashboard/:id" element={<Instructor />} />
-          <Route path="/admin-dashboard" element={<Admin />} />
+          <Route 
+            path="/student-dashboard/:id" 
+            element={
+              <PrivateRoute>
+                <Students />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/instructor-dashboard/:id" 
+            element={
+              <PrivateRoute>
+                <Instructor />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/admin-dashboard" 
+            element={
+              <PrivateRoute>
+                <Admin />
+              </PrivateRoute>
+            } 
+          />
           <Route path="/admin-dashboard/view-courses" element={<ViewCourses />} />
           <Route path="/admin-dashboard/view-students" element={<ShowStudents />} />
           <Route path="/admin-dashboard/view-enrollments" element={<ViewEnrollments />} />
           <Route path="/admin-dashboard/view-instructors" element={<ViewInstructors />} />
-          <Route path="/student-dashboard" element={<div>No student selected</div>} />
-        </Routes>
+       </Routes>
       </Router>
     </div>
   );
