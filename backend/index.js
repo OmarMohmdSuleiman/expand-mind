@@ -344,3 +344,45 @@ app.post('/signup', async (req, res) => {
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
+
+  async function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+  
+    if (!token) {
+      return res.status(401).json({ message: "Access token missing" });
+    }
+  
+    try {
+      
+      const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+  
+      
+      req.user = decoded;
+  
+      
+      next();
+    } catch (error) {
+      console.error("Error verifying token:", error);
+      res.status(403).json({ message: "Invalid or expired token" });
+    }
+  };
+
+  function authorizeRole(...allowedRoles) {
+    return async (req, res, next) => {
+      const userRole = req.user?.role;
+  
+      if (!userRole) {
+        return res.status(401).json({ message: "User role is not found, access denied." });
+      }
+  
+      if (!allowedRoles.includes(userRole)) {
+        return res.status(403).json({ message: `Forbidden: Access restricted for ${userRole}` });
+      }
+  
+      // Proceed to the next middleware or route handler
+      next();
+    };
+  };
+
+  
