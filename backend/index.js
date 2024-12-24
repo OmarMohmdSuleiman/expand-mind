@@ -272,7 +272,7 @@ app.post('/signup', async (req, res) => {
     }
   });
 
-  app.get('/instructor/:id', async (req, res) => {
+  app.get('/instructor/:id',authenticateToken, authorizeRole('instructor'), async (req, res) => {
     const { id } = req.params;
   
     try {
@@ -307,17 +307,17 @@ app.post('/signup', async (req, res) => {
       // Query to fetch student details and their enrolled courses
       const result = await db.query(
         `
-        SELECT 
-          users.user_id, 
-          users.name AS student_name, 
-          users.email, 
-          courses.title AS course_title
-        FROM users
-        LEFT JOIN enrolments ON users.user_id = enrolments.user_id
-        LEFT JOIN courses ON enrolments.course_id = courses.course_id
-        WHERE users.user_id = $1 AND users.role = 'student'
-        `,
-        [id]
+  SELECT 
+    users.user_id, 
+    users.name AS student_name, 
+    users.email, 
+    courses.title AS course_title
+  FROM users
+  LEFT JOIN enrolments ON users.user_id = enrolments.user_id
+  LEFT JOIN courses ON enrolments.course_id = courses.course_id
+  WHERE users.user_id = $1 AND users.role = 'student'
+  `,
+  [id]
       );
   
       if (result.rows.length === 0) {
@@ -346,8 +346,7 @@ app.post('/signup', async (req, res) => {
   });
 
   async function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = req.header("Authorization")?.replace("Bearer ", "");
   
     if (!token) {
       return res.status(401).json({ message: "Access token missing" });
@@ -368,20 +367,12 @@ app.post('/signup', async (req, res) => {
     }
   };
 
-  function authorizeRole(...allowedRoles) {
-    return async (req, res, next) => {
-      const userRole = req.user?.role;
-  
-      if (!userRole) {
-        return res.status(401).json({ message: "User role is not found, access denied." });
+  function authorizeRole(role) {
+    return (req, res, next) => {
+      if (req.user.role !== role) {
+        return res.status(403).json({ message: `Access denied. Required role: ${role}` });
       }
-  
-      if (!allowedRoles.includes(userRole)) {
-        return res.status(403).json({ message: `Forbidden: Access restricted for ${userRole}` });
-      }
-  
-      // Proceed to the next middleware or route handler
-      next();
+      next();  // User has the correct role, continue to the route handler
     };
   };
 
