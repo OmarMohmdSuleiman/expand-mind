@@ -300,7 +300,7 @@ app.post('/signup', async (req, res) => {
     }
   });
 
-  app.get('/student/:id', async (req, res) => {
+  app.get('/student/:id', authenticateToken, authorizeRole('student'), async (req, res) => {
     const { id } = req.params;
   
     try {
