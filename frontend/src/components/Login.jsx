@@ -31,10 +31,13 @@ function Login(){
       console.log("Backend Response:", data);
   
       if (response.ok) {
-        if (data && data.role) {
+        if (data && data.token) {
+          // Save the token to localStorage
+          localStorage.setItem("token", data.token);
+  
           // Assuming the response includes user data
           console.log("Login successful", data.name);
-          
+  
           // Redirect based on the user's role
           if (data.role === "student") {
             navi(`/student-dashboard/${data.id}`);
@@ -47,7 +50,7 @@ function Login(){
             console.log("No role found in user data");
           }
         } else {
-          console.log("Role not found in the user data");
+          console.log("Token not found in the user data");
         }
       } else {
         setErrorMessage(data.message || "Login failed");
