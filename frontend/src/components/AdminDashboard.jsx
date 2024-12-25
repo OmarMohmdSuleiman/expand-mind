@@ -1,29 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 
 function Admin(){
-
+  const [adminData,setAdminData]=useState(null);
   const [instructors, setInstructors] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [selectedInstructor, setSelectedInstructor] = useState('');
   const [message, setMessage] = useState('');
+     const [error, setError] = useState(null);
+
+    const { id } = useParams();
   const navi = useNavigate(); 
 
-  function handleViewCourses(){
-    navi('/admin-dashboard/view-courses');
-  }
-  function handleViewStudents(){
-    navi('/admin-dashboard/view-students');
-  }
-  function handleViewEnrollments(){
-    navi('/admin-dashboard/view-enrollments');
-  }
-  function handleViewInstructors(){
-    navi('/admin-dashboard/view-instructors')
-  }
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // Assuming token is stored in localStorage
 
+    if (!token) {
+      navi('/');
+      return;
+    }
+
+    // Fetch the protected admin data from the backend
+    fetch(`http://localhost:4000/admin-dashboard/${id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`, // Include the JWT token in the request headers
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch admin data');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setAdminData(data);
+      })
+      .catch((err) => {
+        setError('Could not load admin data');
+        console.error(err);
+      });
+  }, [id, navi]);
+
+  
 
   useEffect(() => {
     // Fetch all instructors
@@ -59,6 +81,10 @@ function Admin(){
       setMessage('Error adding course');
     }
   };
+  const handleViewCourses = () => navi('/admin-dashboard/view-courses');
+  const handleViewStudents = () => navi('/admin-dashboard/view-students');
+  const handleViewEnrollments = () => navi('/admin-dashboard/view-enrollments');
+  const handleViewInstructors = () => navi('/admin-dashboard/view-instructors');
 
     return(
         <div>
