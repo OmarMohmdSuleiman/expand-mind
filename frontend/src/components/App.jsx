@@ -36,17 +36,17 @@ function App() {
             } 
           />
           <Route 
-            path="/admin-dashboard" 
+            path="/admin-dashboard/:id" 
             element={
               <PrivateRoute>
                 <Admin />
               </PrivateRoute>
             } 
           />
-          <Route path="/admin-dashboard/view-courses" element={<ViewCourses />} />
-          <Route path="/admin-dashboard/view-students" element={<ShowStudents />} />
-          <Route path="/admin-dashboard/view-enrollments" element={<ViewEnrollments />} />
-          <Route path="/admin-dashboard/view-instructors" element={<ViewInstructors />} />
+          <Route path="/admin-dashboard/:id/view-courses" element={<ViewCourses />} />
+          <Route path="/admin-dashboard/:id/view-students" element={<ShowStudents />} />
+          <Route path="/admin-dashboard/:id/view-enrollments" element={<ViewEnrollments />} />
+          <Route path="/admin-dashboard/:id/view-instructors" element={<ViewInstructors />} />
        </Routes>
       </Router>
     </div>

@@ -45,7 +45,7 @@ function Login(){
             console.log("Navigating to Instructor Dashboard");
             navi(`/instructor-dashboard/${data.id}`);
           } else if (data.role === "admin") {
-            navi("/admin-dashboard");
+            navi(`/admin-dashboard/${data.id}`);
           } else {
             console.log("No role found in user data");
           }

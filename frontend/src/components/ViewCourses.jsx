@@ -6,12 +6,25 @@ function ViewCourses(){
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
+      const token=localStorage.getItem("token");
       // Fetch all courses
-      fetch('http://localhost:4000/courses')
-        .then((response) => response.json())
-        .then((data) => setCourses(data))
-        .catch((error) => console.error('Error fetching courses:', error));
-    }, []);
+      if (token) {
+      fetch('http://localhost:4000/courses', {
+        headers: {
+          "Authorization": `Bearer ${token}`, // Include the token in the header
+        },
+      })
+      .then((response) => {
+        if (response.status === 403) {
+          console.error("Access forbidden. User is not authorized.");
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => setCourses(data))
+      .catch((error) => console.error('Error fetching courses:', error));
+    }
+  }, []);
   
     return (
       <div>
