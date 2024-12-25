@@ -8,7 +8,14 @@ function InstructorDashboard() {
   useEffect(() => {
     const fetchInstructorDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/instructor/${id}`);
+        const token = localStorage.getItem('token');
+            console.log("Token:", token);
+        const response = await fetch(`http://localhost:4000/instructor/${id}`,{
+          method:"GET",
+          headers: {
+            'Authorization': `Bearer ${token}`, 
+          }
+        });
         const data = await response.json();
 
         if (response.ok) {
