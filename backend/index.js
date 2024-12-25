@@ -341,6 +341,25 @@ app.post('/signup', async (req, res) => {
     }
   });
 
+  app.get('/admin-dashboard/:id', authenticateToken, authorizeRole('admin'), async (req, res) => {
+    const { id } = req.params;
+    
+    try {
+      // Query to get user data (specifically for the admin role)
+      const result = await db.query('SELECT * FROM users WHERE user_id = $1 AND role = $2', [id, 'admin']);
+  
+      if (result.rows.length === 0) {
+        return res.status(404).json({ message: 'Admin not found or incorrect role' });
+      }
+  
+      // Respond with the admin data
+      res.json(result.rows[0]);
+    } catch (error) {
+      console.error('Error fetching admin data:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
