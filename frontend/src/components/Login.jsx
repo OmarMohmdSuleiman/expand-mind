@@ -61,11 +61,15 @@ function Login(){
     }
   }
     return(
-        <div> <h2>Login</h2>
+        <div className="container">
+          <h1 className="title">Welcome to<span>ExpandMind </span>Academy</h1>
+          <div className="box">
+        <h2 className="login-word">Login</h2>
         <form onSubmit={handleLogin}>
-          <div>
-            <label htmlFor="email">Email</label>
+          <div className="div_1">
+            <label htmlFor="email" className="label email">Email: </label>
             <input
+            className="input the-email"
               type="text"
               id="email"
               placeholder="Enter your email"
@@ -74,9 +78,10 @@ function Login(){
               required
             />
           </div>
-          <div>
-            <label htmlFor="password">Password:</label>
+          <div className="div_2">
+            <label htmlFor="password" className="label password">Password: </label>
             <input
+            className="input pass"
               type="password"
               id="password"
               placeholder="Enter your password"
@@ -85,9 +90,11 @@ function Login(){
               required
             />
           </div>
-          <button type="submit">Login</button>
+          <button type="submit" className="btn login-btn">Login</button>
         </form>
-        <h4>No account ? <button onClick={SignUpRoute}>SignUp</button></h4></div>
+        <h4>No account ? <button  className="btn signup-btn" onClick={SignUpRoute}>SignUp</button></h4>
+        </div>
+        </div>
     )
 }
 
