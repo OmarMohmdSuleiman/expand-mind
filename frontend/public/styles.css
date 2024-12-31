@@ -5,7 +5,7 @@
     box-sizing: border-box;
   }
   
-  /* Set a background gradient for the body */
+  
   body {
     
     margin: 0;
@@ -13,9 +13,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to right, #0a0a0a, #1a1a1a, #4d4d4d); /* Body background gradient */
+    background: linear-gradient(to right, #0a0a0a, #1a1a1a, #4d4d4d); 
     font-family: Arial, sans-serif;
-    color: white; /* Default text color */
+    color: white; 
   }
   .header {
     position: fixed;
@@ -91,10 +91,10 @@
       transform: scale(0.9); /* Initial size */
     }
     50% {
-      transform: scale(1.15); /* Bigger size */
+      transform: scale(1.15); 
     }
     100% {
-      transform: scale(0.9); /* Back to original size */
+      transform: scale(0.9); 
     }
   }
   .box {
