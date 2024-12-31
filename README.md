@@ -28,5 +28,5 @@
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/expandmind.git
-cd expandmind
+git clone https://github.com/OmarMohmdSuleiman/expand-mind.git
+cd expand-mind
