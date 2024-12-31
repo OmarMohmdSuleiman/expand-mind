@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
+import Header from './Header';
 
 
 function Admin(){
@@ -87,6 +88,8 @@ function Admin(){
   const handleViewInstructors = () => navi('/admin-dashboard/view-instructors');
 
     return(
+      <div><Header />
+      
         <div className="box admin_box">
       <h1>Admin </h1>
       
@@ -138,7 +141,7 @@ function Admin(){
       <button className="view_content" onClick={handleViewEnrollments}>View Enrollments</button>
       <button className="view_content content_2" onClick={handleViewInstructors}>View Instructors</button>
     </div>
-    </div>
+    </div></div>
     )
 }
 

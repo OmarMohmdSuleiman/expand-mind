@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Header from "./Header";
 
 function InstructorDashboard() {
   const { id } = useParams(); // Get instructor ID from URL
@@ -34,22 +35,25 @@ function InstructorDashboard() {
   }, [id]);
 
   return (
-    <div className="box">
-      <h1>Instructor </h1>
-      {instructorData ? (
-        <div>
-          <h2 className="inst_name the_name">Welcome, {instructorData.instructor_name}</h2>
-          <h3>The Course/s: </h3>
-          <ul className="ul">
-            {instructorData.courses.map((course, index) => (
-              <li className="li li_inst" key={index}>{course}</li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <p>Log in first, Regards...</p>
-      )}
-    </div>
+    <div>
+      <Header />
+      <div className="box">
+    <h1>Instructor </h1>
+    {instructorData ? (
+      <div>
+        <h2 className="inst_name the_name">Welcome, {instructorData.instructor_name}</h2>
+        <h3>The Course/s: </h3>
+        <ul className="ul">
+          {instructorData.courses.map((course, index) => (
+            <li className="li li_inst" key={index}>{course}</li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <p>Log in first, Regards...</p>
+    )}
+  </div></div>
+    
   );
 }
 

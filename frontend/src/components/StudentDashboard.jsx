@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import { useParams } from "react-router-dom";
 import StudentCourses from "./StudentCourses";
+import Header from "./Header";
 
 function Students(){
     const {id}=useParams();
@@ -46,6 +47,7 @@ function Students(){
     
            
     return(
+      <div><Header />
         <div className="box">
         <h2 className="student_name the_name">{student.name}</h2>
         <h3 className="student_email">Email: {student.email}</h3>
@@ -53,7 +55,7 @@ function Students(){
         
             <StudentCourses courses={student.enrolled_courses} />
         
-        </div>
+        </div></div>
     )
 }
 

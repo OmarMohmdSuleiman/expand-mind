@@ -11,9 +11,12 @@ import ViewEnrollments from './ViewEnrollments';
 import ViewInstructors from './ViewInstructors';
 import PrivateRoute from './PrivateRoute';
 
+
 function App() {
   return (
     <div>
+      
+      <div>
       <Router>
         <Routes>
         <Route path="/" element={<Login />} />
@@ -49,7 +52,7 @@ function App() {
           <Route path="/admin-dashboard/:id/view-instructors" element={<ViewInstructors />} />
        </Routes>
       </Router>
-    </div>
+    </div></div>
   );
 }
 
