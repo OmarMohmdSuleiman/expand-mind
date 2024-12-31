@@ -73,6 +73,12 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
     
   }
+  .admin_box{
+    width: 400px;
+  }
+  .admin_box:hover{
+    width: 470px;
+  }
   .div_1{
     display: flex;
     gap: 35px;
@@ -145,6 +151,58 @@
     
 
   }
+
+  .the_name{
+    font-family: 'Roboto Slab', serif;
+    margin: 20px;
+  }
+  .ul{
+       margin-top: 20px;
+      list-style-type:none;
+      
+  }
+  .li{
+    color: rgb(240, 238, 128);
+  }
+  .li a{
+    color: rgb(240, 238, 128);
+    text-decoration: none;
+  }
+  .student_email{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    margin-left: -50px;
+    margin-bottom: 30px;
+  }
+  .view{
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    
+  }
+  .view_content{
+    width: 100px;
+    height: 45px;
+    background-color:rgb(240, 238, 128) ;
+    border: none;
+    font-weight: bolder;
+  }
+  .view_content:hover{
+     width: 150px;
+     font-family: cursive ;
+  }
+  .content_1{
+    border-radius: 20px 0px 0px 0px ;
+  }
+  .content_2{
+    border-radius: 0px 0px 20px 0px ;
+  }
+
+
+  
+  
+
 
   @media (max-width: 600px) {
     .title {

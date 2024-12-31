@@ -87,52 +87,57 @@ function Admin(){
   const handleViewInstructors = () => navi('/admin-dashboard/view-instructors');
 
     return(
-        <div>
-      <h1>Admin Dashboard</h1>
+        <div className="box admin_box">
+      <h1>Admin </h1>
       
       <form onSubmit={handleAddCourse}>
-        <div>
-          <label htmlFor="name">Course Name</label>
+        <div className="div_3">
+          <label htmlFor="name" className="label course_name">Course Name</label>
           <input
+          className="input"
             type="text"
             id="name"
+            placeholder="Enter course name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label htmlFor="description">Description</label>
+        <div className="div_1">
+          <label htmlFor="description" className="label desc">Description</label>
           <textarea
+          className="input"
+          placeholder="What the course is about...."
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label htmlFor="instructor">Assign Instructor</label>
+        <div className="div_2">
+          <label htmlFor="instructor" className="label assign">Assign Instructor: </label>
           <select
             id="instructor"
             value={selectedInstructor}
             onChange={(e) => setSelectedInstructor(e.target.value)}
             required
           >
-            <option value="">Select an Instructor</option>
+            <option className="option default_option" value="">Select an Instructor</option>
             {instructors.map((instructor) => (
-              <option key={instructor.user_id} value={instructor.user_id}>
+              <option className="option " key={instructor.user_id} value={instructor.user_id}>
                 {instructor.name}
               </option>
             ))}
           </select>
         </div>
-        <button type="submit">Add Course</button>
+        <button className="btn submit-btn" type="submit">Add Course</button>
       </form>
-
-      <button onClick={handleViewCourses}>View Courses</button>
-      <button onClick={handleViewStudents}>View Students</button>
-      <button onClick={handleViewEnrollments}>View Enrollments</button>
-      <button onClick={handleViewInstructors}>View Instructors</button>
+      <div className="view">
+      <button className="view_content content_1" onClick={handleViewCourses}>View Courses</button>
+      <button className="view_content" onClick={handleViewStudents}>View Students</button>
+      <button className="view_content" onClick={handleViewEnrollments}>View Enrollments</button>
+      <button className="view_content content_2" onClick={handleViewInstructors}>View Instructors</button>
+    </div>
     </div>
     )
 }

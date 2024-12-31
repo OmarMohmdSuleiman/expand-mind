@@ -46,9 +46,10 @@ function Students(){
     
            
     return(
-        <div>
-        <h2>{student.name}</h2>
-        <h3>Email: {student.email}</h3>
+        <div className="box">
+        <h2 className="student_name the_name">{student.name}</h2>
+        <h3 className="student_email">Email: {student.email}</h3>
+        <h3>The Course/s: </h3>
         
             <StudentCourses courses={student.enrolled_courses} />
         

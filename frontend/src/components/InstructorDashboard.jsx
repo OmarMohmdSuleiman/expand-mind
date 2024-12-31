@@ -34,19 +34,20 @@ function InstructorDashboard() {
   }, [id]);
 
   return (
-    <div>
-      <h1>Instructor Dashboard</h1>
+    <div className="box">
+      <h1>Instructor </h1>
       {instructorData ? (
         <div>
-          <h2>{instructorData.instructor_name}</h2>
-          <ul>
+          <h2 className="inst_name the_name">Welcome, {instructorData.instructor_name}</h2>
+          <h3>The Course/s: </h3>
+          <ul className="ul">
             {instructorData.courses.map((course, index) => (
-              <li key={index}>{course}</li>
+              <li className="li li_inst" key={index}>{course}</li>
             ))}
           </ul>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p>Log in first, Regards...</p>
       )}
     </div>
   );
