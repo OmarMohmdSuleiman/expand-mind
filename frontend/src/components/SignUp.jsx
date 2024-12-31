@@ -55,11 +55,14 @@ function SignUp(){
     }
   }
     return(
-        <div><h2>Sign Up</h2>
+        <div className="container">
+          <div className="box">
+          <h2 className="sign-word word">Sign Up</h2>
         <form onSubmit={handleSubmit}> 
-        <div>
-            <label htmlFor="userName">Name</label>
+        <div className="div_3">
+            <label htmlFor="userName" className="label name">Name: </label>
             <input
+             className="input na_me"
               type="text"
               id="name"
               placeholder="Enter your name"
@@ -68,9 +71,10 @@ function SignUp(){
               required
             />
           </div>
-          <div>
-            <label htmlFor="email">Email</label>
+          <div className="div_1">
+            <label htmlFor="email" className="label email">Email: </label>
             <input
+             className="input the-email"
               type="text"
               id="email"
               placeholder="Enter your username"
@@ -79,9 +83,10 @@ function SignUp(){
               required
             />
           </div>
-          <div>
-            <label htmlFor="password">Password:</label>
+          <div className="div_2">
+            <label htmlFor="password" className="label password">Password: </label>
             <input
+              className="input pass"
               type="password"
               id="password"
               placeholder="Enter your password"
@@ -90,22 +95,22 @@ function SignUp(){
               required
             />
           </div>
-          <div>
-          <label htmlFor="role">Role</label>
+          <div className="div_4">
+          <label htmlFor="role" className="label role">Role</label>
           <select
             id="role"
             value={role}
             onChange={handleChange}
             required
           >
-            <option value="">Select Role</option>
-            <option value="student">Student</option>
-            <option value="instructor">Instructor</option>
-            <option value="admin">Admin</option>
+            <option className="option default_option" value="">Select Role</option>
+            <option className="option" value="student">Student</option>
+            <option className="option" value="instructor">Instructor</option>
+            <option className="option" value="admin">Admin</option>
           </select>
         </div>
-          <button type="submit">SignUp</button>
-        </form></div>
+          <button type="submit" className="btn signup-btn">SignUp</button>
+        </form></div></div>
     )
 }
 

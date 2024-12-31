@@ -64,7 +64,7 @@ function Login(){
         <div className="container">
           <h1 className="title">Welcome to<span>ExpandMind </span>Academy</h1>
           <div className="box">
-        <h2 className="login-word">Login</h2>
+        <h2 className="login-word word">Login</h2>
         <form onSubmit={handleLogin}>
           <div className="div_1">
             <label htmlFor="email" className="label email">Email: </label>
