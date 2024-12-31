@@ -37,6 +37,7 @@ function InstructorDashboard() {
   return (
     <div>
       <Header />
+      <div className="container">
       <div className="box">
     <h1>Instructor </h1>
     {instructorData ? (
@@ -52,7 +53,7 @@ function InstructorDashboard() {
     ) : (
       <p>Log in first, Regards...</p>
     )}
-  </div></div>
+  </div></div></div>
     
   );
 }

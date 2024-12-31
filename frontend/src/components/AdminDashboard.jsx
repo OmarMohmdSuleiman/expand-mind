@@ -89,7 +89,7 @@ function Admin(){
 
     return(
       <div><Header />
-      
+      <div className="container">
         <div className="box admin_box">
       <h1>Admin </h1>
       
@@ -141,7 +141,7 @@ function Admin(){
       <button className="view_content" onClick={handleViewEnrollments}>View Enrollments</button>
       <button className="view_content content_2" onClick={handleViewInstructors}>View Instructors</button>
     </div>
-    </div></div>
+    </div></div></div>
     )
 }
 

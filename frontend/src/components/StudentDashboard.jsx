@@ -48,6 +48,7 @@ function Students(){
            
     return(
       <div><Header />
+      <div className="container">
         <div className="box">
         <h2 className="student_name the_name">{student.name}</h2>
         <h3 className="student_email">Email: {student.email}</h3>
@@ -55,7 +56,7 @@ function Students(){
         
             <StudentCourses courses={student.enrolled_courses} />
         
-        </div></div>
+        </div></div></div>
     )
 }
 

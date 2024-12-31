@@ -10,6 +10,7 @@ import ShowStudents from './ShowStudents';
 import ViewEnrollments from './ViewEnrollments';
 import ViewInstructors from './ViewInstructors';
 import PrivateRoute from './PrivateRoute';
+import Footer from './Footer';
 
 
 function App() {
@@ -52,7 +53,8 @@ function App() {
           <Route path="/admin-dashboard/:id/view-instructors" element={<ViewInstructors />} />
        </Routes>
       </Router>
-    </div></div>
+    </div>
+    <Footer /></div>
   );
 }
 
