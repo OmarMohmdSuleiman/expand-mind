@@ -67,6 +67,8 @@
     text-align: center;
   }
   .title{
+    position: absolute;
+    top: 55px;
     font-family: 'Dancing Script', cursive;
     font-weight: bolder;
     font-size: 40px;
@@ -92,6 +94,7 @@
     }
   }
   .box {
+    margin-bottom: 50px;
     width: 330px;
     text-align: center;
     background: rgba(0, 0, 0, 0.3);
@@ -100,9 +103,10 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); 
-    z-index: 10;
+    position: absolute;
     transition: all 0.3s ease;
     opacity: 0.6;
+    height: 400px;
     
   }
   .box:hover{
@@ -115,6 +119,7 @@
   }
   .admin_box{
     width: 400px;
+    margin-top: 0px;
   }
   .admin_box:hover{
     width: 470px;
@@ -218,9 +223,11 @@
     margin-top: 25px;
     display: flex;
     gap: 10px;
-    flex-direction: column;
+    
     
   }
+
+  
   .view_content{
     width: 100px;
     height: 45px;
@@ -238,9 +245,31 @@
   .content_2{
     border-radius: 0px 0px 20px 0px ;
   }
-
-
   
+  .footer {
+    position: fixed;
+    left: 0;
+    background-color: #4d4d4d;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1); 
+    margin-top: 100px;
+  }
+  
+  
+  
+
+  @media (max-width: 800px){
+    .footer {
+      display: none;
+    }
+  }
   
 
 
@@ -260,4 +289,6 @@
     .box:hover {
       height: auto; 
     }
+    
   }
+
