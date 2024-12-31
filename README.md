@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ExpandMind - E-Learning Platform
 
 **ExpandMind** is an e-learning platform designed for instructors to teach students, with admin supervision. It allows instructors to manage their courses, and students to enroll in and track their progress. The platform includes dashboards for students, instructors, and admins, and uses role-based authentication to restrict access.
@@ -30,3 +31,6 @@
 ```bash
 git clone https://github.com/OmarMohmdSuleiman/expand-mind.git
 cd expand-mind
+=======
+# expand-mind
+>>>>>>> 5d17fad85e0bba706de79710a650688a5accf6af
