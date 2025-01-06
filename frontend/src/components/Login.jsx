@@ -34,6 +34,7 @@ function Login(){
         if (data && data.token) {
           // Save the token to localStorage
           localStorage.setItem("token", data.token);
+          localStorage.setItem("role", data.role);
   
           // Assuming the response includes user data
           console.log("Login successful", data.name);

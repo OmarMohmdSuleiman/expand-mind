@@ -9,7 +9,7 @@ function ShowStudents(){
     const [courses, setCourses] = useState([]);
 
 
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("token");
     useEffect(() => {
       if (!token) {
         console.error("No token found, user is not authorized.");

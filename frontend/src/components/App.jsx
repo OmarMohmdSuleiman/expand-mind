@@ -11,7 +11,7 @@ import ViewEnrollments from './ViewEnrollments';
 import ViewInstructors from './ViewInstructors';
 import PrivateRoute from './PrivateRoute';
 import Footer from './Footer';
-
+import Unauthorized from './Unauthorized';
 
 function App() {
   return (
@@ -47,10 +47,39 @@ function App() {
               </PrivateRoute>
             } 
           />
-          <Route path="/admin-dashboard/:id/view-courses" element={<ViewCourses />} />
-          <Route path="/admin-dashboard/:id/view-students" element={<ShowStudents />} />
-          <Route path="/admin-dashboard/:id/view-enrollments" element={<ViewEnrollments />} />
-          <Route path="/admin-dashboard/:id/view-instructors" element={<ViewInstructors />} />
+          <Route 
+            path="/admin-dashboard/view-courses" 
+            element={
+              <PrivateRoute adminOnly>
+                <ViewCourses />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/admin-dashboard/view-students" 
+            element={
+              <PrivateRoute adminOnly>
+                <ShowStudents />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/admin-dashboard/view-enrollments" 
+            element={
+              <PrivateRoute adminOnly>
+                <ViewEnrollments />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/admin-dashboard/view-instructors" 
+            element={
+              <PrivateRoute adminOnly>
+                <ViewInstructors />
+              </PrivateRoute>
+            } 
+          />
+          <Route path="/unauthorized" element={<Unauthorized />} />
        </Routes>
       </Router>
     </div>
