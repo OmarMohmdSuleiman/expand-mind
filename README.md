@@ -7,6 +7,7 @@
 
 - **Authentication**: User authentication for students, instructors, and admins.
 - **Role-Based Dashboards**: Separate dashboards for students, instructors, and admins, with access control.
+- **Logout Functionality: Users can securely log out, removing their session token and redirecting to the login page.
 - **Course Management**: Instructors can create and manage courses. Admins can manage instructors, students, and enrollments.
 - **Responsive Design**: The app is fully responsive and mobile-friendly.
 
